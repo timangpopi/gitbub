@@ -1,7 +1,7 @@
 #!bin/bash
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 echo "Clone Toolchains and Kernel"
-git clone -j32 https://github.com/najahiiii/AnyKernel.git AnyKernel
+git clone -j32 https://github.com/najahiiii/AnyKernel.git Zip
 git clone -j32 https://github.com/najahiiii/aarch64-linux-gnu.git -b gcc9-20190401 gcc
 echo "Done"
 GCC="$(pwd)/gcc/bin/aarch64-linux-gnu-"
@@ -34,7 +34,7 @@ function sendpriv() {
 }
 # Push kernel to channel
 function push() {
-        cd AnyKernel
+        cd Zip
 	ZIP=$(echo Chips*.zip)
 	curl -F document=@$ZIP "https://api.telegram.org/bot$804021619:AAGsNtz-PiDmnuyoIg_lpKVghK_8WmxSbIQ/sendDocument" \
 			-F chat_id="$-1001158707255" \
@@ -65,12 +65,12 @@ function compile() {
                 finerr
                 exit 1
             fi
-        cp out/arch/arm64/boot/Image.gz-dtb AnyKernel/zImage
+        cp out/arch/arm64/boot/Image.gz-dtb Zip/zImage
         paste
 }
 # Zipping
 function zipping() {
-        cd AnyKernel
+        cd Zip
         zip -r9 SteelHeart-kernel-${tanggal}.zip *
         cd ..
 }
